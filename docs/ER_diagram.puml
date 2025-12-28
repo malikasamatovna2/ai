@@ -1,0 +1,93 @@
+@startuml
+' ER diagram for StylistMatch (Smart Booking System)
+' Entities: User, Salon, Service, Booking, StyleProfile, PricingRule, AuditLog
+
+entity "User" as User {
+  * id : uuid
+  --
+  name : varchar
+  email : varchar
+  role : enum(client, stylist, admin)
+  avatar_url : varchar
+  phone : varchar
+  preferences : json
+  created_at : timestamp
+}
+
+entity "Salon" as Salon {
+  * id : uuid
+  --
+  owner_id : uuid
+  name : varchar
+  location : varchar
+  timezone : varchar
+  settings : json
+  created_at : timestamp
+}
+
+entity "Service" as Service {
+  * id : uuid
+  --
+  salon_id : uuid
+  name : varchar
+  duration_min : integer
+  base_price : numeric
+  tags : text[]
+}
+
+entity "Booking" as Booking {
+  * id : uuid
+  --
+  user_id : uuid
+  salon_id : uuid
+  service_id : uuid
+  stylist_id : uuid
+  start_at : timestamp
+  end_at : timestamp
+  status : enum(pending,confirmed,cancelled,completed)
+  price_total : numeric
+  created_at : timestamp
+}
+
+entity "StyleProfile" as StyleProfile {
+  * id : uuid
+  --
+  user_id : uuid
+  photo_url : varchar
+  event_type : varchar
+  attributes : json
+  ai_recommendation : json
+  score : numeric
+  created_at : timestamp
+}
+
+entity "PricingRule" as PricingRule {
+  * id : uuid
+  --
+  salon_id : uuid
+  rule_type : enum(dynamic_multiplier, time_surcharge, demand_markup)
+  params : json
+  active : boolean
+}
+
+entity "AuditLog" as AuditLog {
+  * id : uuid
+  --
+  entity : varchar
+  action : varchar
+  payload : json
+  created_at : timestamp
+}
+
+' Relationships
+User ||--o{ Salon : owns
+Salon ||--o{ Service : offers
+Service ||--o{ Booking : booked_as
+User ||--o{ Booking : makes
+User ||--o{ StyleProfile : has
+Salon ||--o{ PricingRule : has
+'
+' stylist_id in Booking is FK to User(id) where User.role = "stylist"
+Booking }o--|| User : stylist
+
+@enduml

@@ -1,0 +1,8 @@
+.btn{font-family:var(--font-sans);padding:12px 18px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);cursor:pointer;font-size:16px}
+.btn-primary{background:var(--color-primary);color:#03121a}
+.btn-ghost{background:transparent;color:var(--color-text);border:1px solid rgba(255,255,255,0.06)}
+.btn-danger{background:var(--color-danger);color:#121212}
+
+/* Large/button block helpers */
+.btn-lg{padding:14px 20px;font-size:16px;border-radius:10px}
+.btn-block{width:100%;max-width:520px}

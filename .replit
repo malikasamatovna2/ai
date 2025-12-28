@@ -1,0 +1,4 @@
+run = "npm run dev:frontend"
+
+# Replit will run the frontend dev server by default.
+# For full setup, set up secrets for OPENAI_KEY etc. in the Replit UI.
